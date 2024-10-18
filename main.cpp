@@ -7,6 +7,7 @@
 #include <vector>
 
 std::vector<std::vector<int>>* readCSV(std::vector<std::vector<int>>* array, std::string fileName) {
+    // In case there is some garbage value in array
     array->clear();
     std::ifstream file(fileName);
     if (!file.is_open()) {
@@ -26,6 +27,7 @@ std::vector<std::vector<int>>* readCSV(std::vector<std::vector<int>>* array, std
         char comma;  // To discard the commas during parsing
 
         if (ss >> x1 >> comma >> x2 >> comma >> x3) {
+            // used push back method to easily append new element array to the existing array
             array->push_back({x1, x2, x3});
         }
 
@@ -36,8 +38,10 @@ std::vector<std::vector<int>>* readCSV(std::vector<std::vector<int>>* array, std
     return array;
 }
 
-// Calculates
+
 int minValue(std::vector<std::vector<int>>* array) {
+    // accessing array using at() notation to conveniently access the array
+    //https://www.geeksforgeeks.org/arrayat-c-stl/
     int minVal=array->at(0).at(0);
     for (int i = 0; i < array->size(); i++) {
         if (array->at(i).at(0) < minVal) {
@@ -47,9 +51,12 @@ int minValue(std::vector<std::vector<int>>* array) {
     return minVal;
 }
 
+
 double meanValue(std::vector<std::vector<int>>* array, int collumn) {
     if (array->empty()) return 0.0; // Safe check for an empty array
     double sum=0;
+
+    // looping through to calculate the sum
     for (int i = 0; i < array->size(); i++) {
         sum += array->at(i).at(collumn);
     }
@@ -60,6 +67,7 @@ double standardDeviationValue(std::vector<std::vector<int>>* array, int collumn)
     if (array->empty()) return 0.0; // Safe check for an empty array
     double mean =meanValue(array, collumn);
     int sdsum =0;
+
     for (int i = 0; i < array->size(); i++) {
         sdsum += pow((array->at(i).at(collumn)-mean), 2);
     }
